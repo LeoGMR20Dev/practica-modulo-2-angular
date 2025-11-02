@@ -1,0 +1,42 @@
+<h1>{{ stockAddTitle() }}</h1>
+
+<div>
+  <h5>Nombre: {{ this.name() }}</h5>
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Nombre"
+    [value]="this.name()"
+    (change)="this.name.set(txtName.value)"
+    #txtName
+  />
+</div>
+
+<div>
+  <h5>Cantidad: {{ this.quantity() }}</h5>
+  <input
+    type="number"
+    class="form-control"
+    placeholder="Cantidad"
+    [value]="this.quantity()"
+    (change)="this.quantity.set(txtQuantity.valueAsNumber)"
+    #txtQuantity
+  />
+</div>
+
+<div>
+  <h5>Existencias: {{ this.existances() }}</h5>
+  <input
+    type="number"
+    class="form-control"
+    placeholder="Existencias"
+    [value]="this.existances()"
+    (change)="this.existances.set(txtExistences.valueAsNumber)"
+    #txtExistences
+  />
+</div>
+
+<button class="btn btn-primary mt-3" (click)="addStock()">Agregar Stock</button>
+<button class="btn btn-danger mt-3" (click)="resetInputs()">
+  Limpiar campos
+</button>
