@@ -1,59 +1,114 @@
-# EnterpriseSystem
+# Introducción
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.9.
+En este proyecto se agregó un formulario reactivo para la sección de stocks. A continuación, se explica los cambios realizados para la implementación de dicho formulario.
 
-## Development server
 
-To start a local development server, run:
+# Explicación
 
-```bash
-ng serve
+## Componentes Agregados
+
+### Página reactive-stock
+
+Se agregó un componente llamado **reactive-stock** en la carpeta de **pages**.
+
+En el archivo .ts de este componente se injecta el servicio **StockService** para que pueda ser usado en los componentes que se mostrarán a continuación.
+
+```
+@Component({
+  selector: 'app-reactive-stock',
+  imports: [
+    ReactiveFormsModule,
+    ReactiveStockAddComponent,
+    ReactiveStockListComponent,
+  ],
+  templateUrl: './reactive-stock.component.html',
+  styleUrl: './reactive-stock.component.css',
+})
+export default class ReactiveStockComponent {
+  stockService = inject(StockService);
+}
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Componente reactive-stock-add
 
-## Code scaffolding
+Se agregó el componente **reactive-stock-add**, el cual se encarga de la gestión y renderizado del formulario para agregar stock.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Para usar las funciones del servicio de **StockService** se lo importa mediante el constructor de la clase. Luego se declara la función **onSubmit** para agregar un item del stock en la lista del servicio, esto en caso de que el formulario fuera valido.
 
-```bash
-ng generate component component-name
+```
+constructor(public stockService: StockService) {}
+
+onSubmit() {
+  if (this.addStockReactiveForm.valid) {
+    const data = this.addStockReactiveForm.value;
+    const newStock: IStock = {
+      id: Math.floor(Math.random() * 100),
+      name: data.product!,
+      quantity: data.quantity!,
+      existances: data.existance!,
+    };
+    this.stockService.AddStock(newStock);
+    this.clearForm();
+  }
+}
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Se añadío la función onSubmit en el formulario en el HTML respectivo del componente junto con sus inputs.
 
-```bash
-ng generate --help
+```
+<form
+  autocomplete="off"
+  class="d-flex flex-column gap-2"
+  [formGroup]="addStockReactiveForm"
+  (ngSubmit)="onSubmit()"
+>
+  <div>
+    <label>Nombre:</label>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Ingrese el nombre del producto"
+      formControlName="product"
+    />
+  </div>
+  ...
 ```
 
-## Building
+### Componente reactive-stock-list
 
-To build the project run:
+Se agregó el componente **reactive-stock-list** para la renderización de la lista de productos de stock. Se invoca la lista de items de **StockService** para ser renderizada en una tabla en caso de tener algún item registrado, caso contrario solo se muestra un texto.
 
-```bash
-ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
+@if(stockService.stockItems().length >0){
+<table class="table table-striped border">
+  <thead>
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col">Cantidad</th>
+      <th scope="col">Existencias</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (stock of stockService.stockItems(); track stock.id){
+    <tr>
+      <td>{{ stock.name }}</td>
+      <td
+        [class.text-danger]="stock.quantity < 10"
+        [class.text-success]="stock.quantity >= 10"
+      >
+        {{ stock.quantity }}
+      </td>
+      <td>
+        {{ stock.existances }}
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>
+} @else {
+<p class="">No se tienen productos registrados.</p>
+}
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Resultado final
