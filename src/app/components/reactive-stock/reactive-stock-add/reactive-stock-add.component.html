@@ -1,0 +1,52 @@
+<h2>Agregar Stock</h2>
+
+<form
+  autocomplete="off"
+  class="d-flex flex-column gap-2"
+  [formGroup]="addStockReactiveForm"
+  (ngSubmit)="onSubmit()"
+>
+  <div>
+    <label>Nombre:</label>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Ingrese el nombre del producto"
+      formControlName="product"
+    />
+  </div>
+  <div>
+    <label>Cantidad:</label>
+    <input
+      type="number"
+      class="form-control"
+      placeholder="Ingrese la cantidad del producto"
+      formControlName="quantity"
+    />
+  </div>
+  <div>
+    <label>Existencias:</label>
+    <input
+      type="number"
+      class="form-control"
+      placeholder="Ingrese las existencias del producto"
+      formControlName="existance"
+    />
+  </div>
+  <div class="row">
+    <div class="col">
+      <button
+        type="submit"
+        class="btn btn-primary w-100"
+        [disabled]="!addStockReactiveForm.valid"
+      >
+        Agregar
+      </button>
+    </div>
+    <div class="col">
+      <button type="reset" class="btn btn-danger w-100" (click)="clearForm()">
+        Limpiar
+      </button>
+    </div>
+  </div>
+</form>

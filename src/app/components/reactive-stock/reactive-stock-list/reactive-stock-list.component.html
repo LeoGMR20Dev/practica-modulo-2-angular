@@ -1,0 +1,31 @@
+<h2>Listado del Stock</h2>
+
+@if(stockService.stockItems().length >0){
+<table class="table table-striped border">
+  <thead>
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col">Cantidad</th>
+      <th scope="col">Existencias</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (stock of stockService.stockItems(); track stock.id){
+    <tr>
+      <td>{{ stock.name }}</td>
+      <td
+        [class.text-danger]="stock.quantity < 10"
+        [class.text-success]="stock.quantity >= 10"
+      >
+        {{ stock.quantity }}
+      </td>
+      <td>
+        {{ stock.existances }}
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>
+} @else {
+<p class="">No se tienen productos registrados.</p>
+}
