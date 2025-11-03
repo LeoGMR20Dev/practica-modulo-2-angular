@@ -2,12 +2,9 @@
 
 En este proyecto se agregó un formulario reactivo para la sección de stocks. A continuación, se explica los cambios realizados para la implementación de dicho formulario.
 
+# Componentes Agregados
 
-# Explicación
-
-## Componentes Agregados
-
-### Página reactive-stock
+## Página reactive-stock
 
 Se agregó un componente llamado **reactive-stock** en la carpeta de **pages**.
 
@@ -29,7 +26,7 @@ export default class ReactiveStockComponent {
 }
 ```
 
-### Componente reactive-stock-add
+## Componente reactive-stock-add
 
 Se agregó el componente **reactive-stock-add**, el cual se encarga de la gestión y renderizado del formulario para agregar stock.
 
@@ -74,7 +71,7 @@ Se añadío la función onSubmit en el formulario en el HTML respectivo del comp
   ...
 ```
 
-### Componente reactive-stock-list
+## Componente reactive-stock-list
 
 Se agregó el componente **reactive-stock-list** para la renderización de la lista de productos de stock. Se invoca la lista de items de **StockService** para ser renderizada en una tabla en caso de tener algún item registrado, caso contrario solo se muestra un texto.
 
@@ -111,4 +108,7 @@ Se agregó el componente **reactive-stock-list** para la renderización de la li
 }
 ```
 
-## Resultado final
+# Resultado final
+
+<img width="1881" height="425" alt="image" src="https://github.com/user-attachments/assets/ac4888a6-e12f-4cd6-a633-fde169059db1" />
+
